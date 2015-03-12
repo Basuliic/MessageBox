@@ -14,9 +14,9 @@ public interface AdvertDao {
 
     List<Advertisement> readAdvertsByAuthor(Request request);
 
-    void saveAdvert(Advertisement advert);
+    void saveAdvert(Request request);
 
-    void deleteAdvert(Advertisement advert);
+    void deleteAdvert(Request request);
 
-    void changeAdvert(Advertisement advert);
+    void changeAdvert(Request request);
 }

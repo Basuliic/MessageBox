@@ -7,7 +7,34 @@ public class Request {
     private boolean writeXml;
     private boolean exit;
     private String userName;
+    private String topic;
+    private String title;
+    private String text;
     private int action;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
     public int getAction() {
         return action;
