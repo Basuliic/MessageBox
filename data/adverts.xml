@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="CP1251" standalone="yes"?>
+<adverts>
+    <advertisements>
+        <advertisement author="VASYA" time="1426266764">
+            <topic>�������</topic>
+            <title>������ ���2101</title>
+            <text>������ ������ ��� 2101 1973 ���� � �������� ���������
+                ���������� � ����������, � ����� �������, �������� ������.
+                ���������� � ����� 123546789
+            </text>
+        </advertisement>
+        <advertisement author="Petya" time="1426266951">
+            <topic>������</topic>
+            <title>���� ������</title>
+            <text>���� ������, �����, ����� ������ ��� ����� ����.
+                ������ � ������ ��������������.
+                ������� � ����� ����� 15
+            </text>
+        </advertisement>
+        <advertisement author="Petya" time="1426267098">
+            <topic>�������</topic>
+            <title>����� �������</title>
+            <text>����� �����-�������� ������� ��� ����������� ����. ������.
+                ���������� � ����� ������. ������� � ����� ����� 15
+            </text>
+        </advertisement>
+        <advertisement author="Petya" time="1426267206">
+            <topic>������</topic>
+            <title>������ ������� ����� 12</title>
+            <text>������ ����� �������� �������� ������ ���������������� ���������� ����� 12.
+                �� ����� �����, �� ��� ���������)
+            </text>
+        </advertisement>
+        <advertisement author="A_shot" time="1426267346">
+            <topic>����������</topic>
+            <title>������������ � ��������</title>
+            <text>������������� � �������� �������� � �������� ������. ��� � ���������. ��������� ��
+                �������, ���������� � ��������)
+            </text>
+        </advertisement>
+    </advertisements>
+</adverts>
