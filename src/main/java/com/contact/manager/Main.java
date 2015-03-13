@@ -3,8 +3,6 @@ package com.contact.manager;
 import com.contact.manager.api.UI;
 import com.contact.manager.front.UiImpl;
 
-import java.io.FileNotFoundException;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -14,11 +12,7 @@ public class Main {
         front.signIn();
 
         while (!front.isClose()) {
-            try {
-                front.menu();
-            } catch (FileNotFoundException e) {
-                break;
-            }
+            front.menu();
         }
         front.exit();
     }

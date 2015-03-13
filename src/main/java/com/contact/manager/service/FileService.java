@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by ^_^ on 11.03.2015.
+ * Файловый сервис
  */
 public class FileService {
     private static JsonDao jsonDao = JsonDao.getJsonDao();
@@ -93,15 +93,15 @@ public class FileService {
     public void saveAll(boolean writeXml) {
         jsonDao.saveAdverts(advertList);
         if (writeXml) {
-            xmlDao.saveAdverts();
+            xmlDao.saveAdverts(advertList);
         }
     }
 
     public static void init(boolean writeXml) {
         JsonDao.init();
+        TopicsDao.init();
         if (writeXml) {
             XmlDao.init();
         }
-
     }
 }

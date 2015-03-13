@@ -2,6 +2,7 @@ package com.contact.manager.dao;
 
 import com.contact.manager.dao.model.Advertisement;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
@@ -14,16 +15,23 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by ^_^ on 11.03.2015.
+ * DAO для объявлений в формате JSON
  */
 public class JsonDao {
-    private static Gson gson = new Gson();
-    private static String PATH = "data/adverts.json";
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final String
+            PATH = "data/adverts.json",
+            ENCODING = "CP1251";
     private static JsonDao dao;
 
     private JsonDao() {
     }
 
+    /**
+     * Метод получения экземпляра класса JsonDao
+     *
+     * @return экземпляр класса JsonDao
+     */
     public static JsonDao getJsonDao() {
         if (dao == null) {
             dao = new JsonDao();
@@ -31,10 +39,16 @@ public class JsonDao {
         return dao;
     }
 
+    /**
+     * Метод получения объявлений из файла
+     *
+     * @return Лист объявлений
+     * @throws FileNotFoundException - если файл не обнаружен
+     */
     @SuppressWarnings("unchecked")
     public List<Advertisement> readAdverts() throws FileNotFoundException {
         List<Advertisement> result = new ArrayList<>();
-        Scanner in = new Scanner(new File(PATH), "CP1251");
+        Scanner in = new Scanner(new File(PATH), ENCODING);
         StringBuilder sb = new StringBuilder();
         while (in.hasNextLine())
             sb.append(in.nextLine());
@@ -47,24 +61,30 @@ public class JsonDao {
         return result;
     }
 
+    /**
+     * Метод сохранения объявлений в файл
+     */
     public void saveAdverts(List<Advertisement> list) {
         String s = gson.toJson(list);
         File file = new File(PATH);
         file.getParentFile().mkdirs();
         try (FileOutputStream os = new FileOutputStream(file)) {
-            os.write(s.getBytes("CP1251"));
+            os.write(s.getBytes(ENCODING));
             os.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Создаёт новые файлы для сохранения информации
+     */
     public static void init() {
         String s = "[]";
         File file = new File(PATH);
         file.getParentFile().mkdirs();
         try (FileOutputStream os = new FileOutputStream(file)) {
-            os.write(s.getBytes("CP1251"));
+            os.write(s.getBytes(ENCODING));
             os.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,11 +1,16 @@
 package com.contact.manager.dao.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by ^_^ on 12.03.2015.
+ * Класс-маппинг объявления
  */
+@XmlRootElement(name = "advertisement")
+@XmlType(propOrder = {"topic", "title", "text"})
 public class Advertisement {
     String author,
             topic,
@@ -13,6 +18,7 @@ public class Advertisement {
             text;
     long time;
 
+    @XmlAttribute
     public String getAuthor() {
         return author;
     }
@@ -45,6 +51,7 @@ public class Advertisement {
         this.text = text;
     }
 
+    @XmlAttribute
     public long getTime() {
         return time;
     }

@@ -37,11 +37,12 @@ public class UiImpl implements UI {
                     "латиницей или цифрами, первый символ всегда должен быть буквой)",
             CHOOSE_TOPIC = "Выберите рубрику:",
             TOPIC_ERR = "Не найден файл с рубриками",
+            FILE_CREATE = "Создан стандартный файл",
             SET_TITLE = "Введите заголовок(от 10 до 30 символов):",
             TITLE_ERR = "Неверный объём текста. Введите заново",
             SET_TEXT = "Введите текст(от 20 до 400 символов). Наберите /q для завершения",
             END_OF_TEXT = "/q",
-            ADVERTS_ERR = "Не найден файл объявлений. Будет создан новый.",
+            ADVERTS_ERR = "Не найден файл объявлений",
             TEXT_ERR = "Неверный объём текста. Введите заново",
             NO_ADVERTS = "Не найдено объявлений",
             AUTHOR_REGEX = "^\\p{Alpha}\\w{3,19}";
@@ -73,14 +74,13 @@ public class UiImpl implements UI {
     }
 
     @Override
-    public void menu() throws FileNotFoundException {
-        prepare();
-        System.out.println(MENU);
+    public void menu() {
         try {
+            prepare();
+            System.out.println(MENU);
             choose();
         } catch (FileNotFoundException e) {
-            System.out.println(TOPIC_ERR);
-            throw e;
+            e.printStackTrace();
         }
     }
 
@@ -146,11 +146,19 @@ public class UiImpl implements UI {
         }
     }
 
+    /**
+     * запись автора в запрос из консоли
+     */
     private void setAuthor() {
         String author = getAuthor();
         request.setAuthor(author);
     }
 
+    /**
+     * получение имени автора(пользователя) с верификацией из консоли
+     *
+     * @return имя автора
+     */
     private String getAuthor() {
         System.out.println(CHOOSE_AUTHOR);
         String userName = console.nextLine();
@@ -161,50 +169,66 @@ public class UiImpl implements UI {
         return getAuthor();
     }
 
+    /**
+     * запись рубрики в запрос из консоли
+     *
+     * @throws FileNotFoundException
+     */
     private void setTopic() throws FileNotFoundException {
+        List<Topic> list = service.getTopics();
+        System.out.println(CHOOSE_TOPIC);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.printf("%2d - %s\n", i + 1, list.get(i).toString());
+        }
+        int i;
         try {
-            List<Topic> list = service.getTopics();
-            System.out.println(CHOOSE_TOPIC);
-            for (int i = 0; i < list.size(); i++) {
-                System.out.printf("%2d - %s\n", i + 1, list.get(i).toString());
-            }
-            int i = Integer.parseInt(console.nextLine());
+            i = Integer.parseInt(console.nextLine());
             Topic topic = list.get(i - 1);
             request.setTopic(topic.toString());
-        } catch (FileNotFoundException e) {
-            System.out.println(TOPIC_ERR);
-            throw e;
+        } catch (NumberFormatException e) {
+            System.out.println(CHOOSE_MENU_ERR);
+            setTopic();
         }
     }
 
+    /**
+     * инициация сервисов и файловой структуры
+     * @throws FileNotFoundException
+     */
     private void prepare() throws FileNotFoundException {
         if (service == null) {
             try {
                 service = new FileService();
             } catch (FileNotFoundException e) {
                 System.out.println(ADVERTS_ERR);
+                System.out.println(FILE_CREATE);
                 FileService.init(writeXml);
                 service = new FileService();
             }
         }
     }
 
+    /**
+     * запись заголовка в запрос из консоли
+     */
     private void setTitle() {
         System.out.println(SET_TITLE);
         String s = console.nextLine();
+        request.setTitle(s);
         int length = s.length();
         if (length <= 10 || length > 30) {
             System.out.println(TITLE_ERR);
             setTitle();
         }
-        request.setTitle(s);
     }
 
+    /**
+     *запись тескта в запрос из консоли
+     */
     private void setText() {
         System.out.println(SET_TEXT);
         StringBuilder text = new StringBuilder();
         String s = console.nextLine();
-        ;
         while (!s.equals(END_OF_TEXT)) {
             boolean quit = false;
             if (s.endsWith(END_OF_TEXT)) {
@@ -217,13 +241,17 @@ public class UiImpl implements UI {
             s = console.nextLine();
         }
         int length = text.length();
+        request.setText(text.toString());
         if (length <= 20 || length > 400) {
             System.out.println(TEXT_ERR);
             setText();
         }
-        request.setText(text.toString());
     }
 
+    /**
+     * печать объявлений в консоль
+     * @param list
+     */
     private void printAdverts(List<Advertisement> list) {
         if (list.size() == 0)
             System.out.println(NO_ADVERTS);
@@ -238,11 +266,4 @@ public class UiImpl implements UI {
         this.service = service;
     }
 
-    public Scanner getConsole() {
-        return console;
-    }
-
-    public void setConsole(Scanner console) {
-        this.console = console;
-    }
 }

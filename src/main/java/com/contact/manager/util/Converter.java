@@ -6,7 +6,7 @@ import com.contact.manager.dao.model.Advertisement;
 import java.time.Instant;
 
 /**
- * Created by ^_^ on 12.03.2015.
+ * Конвертер запроса в объявление
  */
 public class Converter {
     public static Advertisement convert(Request request) {

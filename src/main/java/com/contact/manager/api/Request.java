@@ -1,7 +1,7 @@
 package com.contact.manager.api;
 
 /**
- * Created by ^_^ on 11.03.2015.
+ * Ксласс запроса на файловый сервис
  */
 public class Request {
     private String userName;
