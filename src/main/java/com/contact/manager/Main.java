@@ -13,11 +13,13 @@ public class Main {
         front.chooseOut();
         front.signIn();
 
-        while (!front.isClose())
+        while (!front.isClose()) {
             try {
                 front.menu();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                break;
             }
+        }
+        front.exit();
     }
 }
