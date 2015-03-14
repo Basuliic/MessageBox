@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
  * Файловый сервис
  */
 public class FileService {
-    private static JsonDao jsonDao = JsonDao.getJsonDao();
-    private static XmlDao xmlDao = XmlDao.getXmlDao();
-    private static TopicsDao topicsDao = TopicsDao.getTopicsDao();
+    private JsonDao jsonDao = JsonDao.getJsonDao();
+    private XmlDao xmlDao = XmlDao.getXmlDao();
+    private TopicsDao topicsDao = TopicsDao.getTopicsDao();
     private List<Advertisement> advertList;
     private List<Topic> topicList;
 
@@ -28,7 +28,7 @@ public class FileService {
         topicList = topicsDao.getTopics();
     }
 
-    public List<Topic> getTopics() throws FileNotFoundException {
+    public List<Topic> getTopics() {
         return topicList;
     }
 
@@ -100,8 +100,17 @@ public class FileService {
     public static void init(boolean writeXml) {
         JsonDao.init();
         TopicsDao.init();
-        if (writeXml) {
-            XmlDao.init();
-        }
+    }
+
+    public List<Advertisement> getAdvertList() {
+        return advertList;
+    }
+
+    public void setAdvertList(List<Advertisement> advertList) {
+        this.advertList = advertList;
+    }
+
+    public void setTopicList(List<Topic> topicList) {
+        this.topicList = topicList;
     }
 }

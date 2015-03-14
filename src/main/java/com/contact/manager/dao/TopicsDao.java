@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,12 +50,12 @@ public class TopicsDao {
      */
     @SuppressWarnings("unchecked")
     public List<Topic> getTopics() throws FileNotFoundException {
-        List<Topic> topics = null;
+        List<Topic> topics = new ArrayList<>(1);
         try (InputStreamReader br = new InputStreamReader(new FileInputStream(PATH), ENCODING)) {
             //convert the json string back to object
             Type type = new TypeToken<List<Topic>>() {
             }.getType();
-            topics = (List<Topic>) gson.fromJson(br, type);
+            topics = gson.fromJson(br, type);
         } catch (FileNotFoundException e) {
             throw e;
         } catch (IOException e) {

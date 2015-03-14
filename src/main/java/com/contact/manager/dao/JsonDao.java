@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -47,7 +46,6 @@ public class JsonDao {
      */
     @SuppressWarnings("unchecked")
     public List<Advertisement> readAdverts() throws FileNotFoundException {
-        List<Advertisement> result = new ArrayList<>();
         Scanner in = new Scanner(new File(PATH), ENCODING);
         StringBuilder sb = new StringBuilder();
         while (in.hasNextLine())
@@ -56,7 +54,7 @@ public class JsonDao {
         //convert the json string back to object
         Type type = new TypeToken<List<Advertisement>>() {
         }.getType();
-        result = (List<Advertisement>) gson.fromJson(sb.toString(), type);
+        List<Advertisement> result = gson.fromJson(sb.toString(), type);
 
         return result;
     }

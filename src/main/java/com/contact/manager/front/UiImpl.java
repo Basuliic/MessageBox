@@ -36,7 +36,6 @@ public class UiImpl implements UI {
             AUTHOR_ERR = "Введено неверное имя пользователя необходимо от 4 до 20 символов, " +
                     "латиницей или цифрами, первый символ всегда должен быть буквой)",
             CHOOSE_TOPIC = "Выберите рубрику:",
-            TOPIC_ERR = "Не найден файл с рубриками",
             FILE_CREATE = "Создан стандартный файл",
             SET_TITLE = "Введите заголовок(от 10 до 30 символов):",
             TITLE_ERR = "Неверный объём текста. Введите заново",
@@ -47,6 +46,13 @@ public class UiImpl implements UI {
             NO_ADVERTS = "Не найдено объявлений",
             AUTHOR_REGEX = "^\\p{Alpha}\\w{3,19}";
 
+    public UiImpl(Scanner console) {
+        this.console = console;
+    }
+
+    public UiImpl() {
+    }
+
     @Override
     public void welcome() {
         System.out.println(WELCOME);
@@ -55,7 +61,12 @@ public class UiImpl implements UI {
     @Override
     public void chooseOut() {
         System.out.println(CHOOSE_OUT);
-        int i = Integer.parseInt(console.nextLine());
+        int i;
+        try {
+            i = Integer.parseInt(console.nextLine());
+        } catch (NumberFormatException e) {
+            i = 0;
+        }
         switch (i) {
             case 1://сохранение в JSON файл
                 //используется по умолчанию
@@ -126,7 +137,8 @@ public class UiImpl implements UI {
             case 5:
                 setTopic();
                 setTitle();
-                if (!service.checkExist(request)) { //todo excep
+                if (!service.checkExist(request)) {
+                    System.out.println(NO_ADVERTS);
                     break;
                 }
                 setText();
@@ -193,6 +205,7 @@ public class UiImpl implements UI {
 
     /**
      * инициация сервисов и файловой структуры
+     *
      * @throws FileNotFoundException
      */
     private void prepare() throws FileNotFoundException {
@@ -223,7 +236,7 @@ public class UiImpl implements UI {
     }
 
     /**
-     *запись тескта в запрос из консоли
+     * запись тескта в запрос из консоли
      */
     private void setText() {
         System.out.println(SET_TEXT);
@@ -250,7 +263,8 @@ public class UiImpl implements UI {
 
     /**
      * печать объявлений в консоль
-     * @param list
+     *
+     * @param list лист объявлений на печать
      */
     private void printAdverts(List<Advertisement> list) {
         if (list.size() == 0)
@@ -258,12 +272,11 @@ public class UiImpl implements UI {
         list.forEach(System.out::println);
     }
 
-    public FileService getService() {
-        return service;
+    public Scanner getConsole() {
+        return console;
     }
 
-    public void setService(FileService service) {
-        this.service = service;
+    public void setConsole(Scanner console) {
+        this.console = console;
     }
-
 }

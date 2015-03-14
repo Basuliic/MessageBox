@@ -12,11 +12,11 @@ import java.util.Date;
 @XmlRootElement(name = "advertisement")
 @XmlType(propOrder = {"topic", "title", "text"})
 public class Advertisement {
-    String author,
-            topic,
-            title,
-            text;
-    long time;
+    private String author;
+    private String topic;
+    private String title;
+    private String text;
+    private long time;
 
     @XmlAttribute
     public String getAuthor() {

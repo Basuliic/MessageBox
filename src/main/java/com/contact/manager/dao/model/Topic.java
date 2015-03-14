@@ -4,7 +4,7 @@ package com.contact.manager.dao.model;
  * Класс-маппинг рубрики
  */
 public class Topic {
-    String topic;
+    private String topic;
 
     public String getTopic() {
         return topic;

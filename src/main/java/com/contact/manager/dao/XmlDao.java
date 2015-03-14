@@ -2,7 +2,6 @@ package com.contact.manager.dao;
 
 import com.contact.manager.dao.model.Advertisement;
 import com.contact.manager.dao.model.Adverts;
-import com.google.gson.Gson;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -15,9 +14,7 @@ import java.util.List;
  */
 public class XmlDao {
     private static final String
-            PATH = "data/adverts.xml",
-            ENCODING = "CP1251";
-    private static Gson gson = new Gson();
+            PATH = "data/adverts.xml";
     private static XmlDao dao;
 
     private XmlDao() {
@@ -46,7 +43,6 @@ public class XmlDao {
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             // форматированный вывод
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, ENCODING);
 
             jaxbMarshaller.marshal(adverts, file);
         } catch (JAXBException e) {
@@ -54,10 +50,4 @@ public class XmlDao {
         }
     }
 
-    /**
-     * Создаёт новые файлы для сохранения информации
-     */
-    public static void init() {
-
-    }
 }
